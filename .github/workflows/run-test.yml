@@ -1,0 +1,37 @@
+name: Run Mobile Automation Tests Daily
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Setiap hari jam 2 pagi UTC (sesuaikan)
+  workflow_dispatch:     # Bisa trigger manual lewat GitHub Actions UI
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # versi node yang kamu pakai
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Android SDK (optional, jika kamu perlu)
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 30
+          target: default
+          arch: x86_64
+          build-tools: 30.0.3
+
+      - name: Start Appium server
+        run: |
+          nohup npx appium &
+
+      - name: Run WebdriverIO tests
+        run: npx wdio run wdio.conf.js
