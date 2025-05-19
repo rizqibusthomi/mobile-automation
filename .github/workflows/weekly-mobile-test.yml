@@ -32,4 +32,5 @@ jobs:
           script: |
             adb wait-for-device
             adb devices
+            chmod +x ../../script/wait-for-emulator.sh
             npm run test:android
