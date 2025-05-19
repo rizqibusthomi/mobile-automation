@@ -1,10 +1,9 @@
-# .github/workflows/mobile-test.yml
 name: Weekly Mobile Test
 
 on:
   schedule:
     - cron: '0 4 * * 1' # Setiap Senin pukul 11:00 WIB
-  workflow_dispatch: # Bisa juga dijalankan manual
+  workflow_dispatch: # Bisa dijalankan manual juga
 
 jobs:
   android-test:
@@ -22,13 +21,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Android Emulator and Execute Test
+      - name: Run Android Emulator and Execute Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
           target: google_apis
           arch: x86_64
           profile: pixel_4
+          disable-animations: false # Hindari error ADB
           script: |
+            adb wait-for-device
             adb devices
-            npm run test:android # <- pastikan script ini ada di package.json
+            npm run test:android

@@ -2,7 +2,7 @@
   "name": "mobile-automation",
   "type": "module",
   "scripts": {
-  "test:android": "npx wdio run wdio.conf.js --spec ./test/specs/mobile/product.test.js"
+  "test:android": "./script/wait-for-emulator.sh && npx wdio run wdio.conf.js --spec ./test/specs/mobile/product.test.js"
 },
   "devDependencies": {
     "@wdio/appium-service": "^9.14.0",
