@@ -1,4 +1,4 @@
-name: Weekly Appium Test
+name: Weekly Appium Testt
 
 on:
   schedule:
